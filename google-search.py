@@ -1,7 +1,7 @@
 import streamlit as st
 from googlesearch import search
 
-APP_NAME = "Google Search"
+APP_NAME = "Google Search Test"
 
 st.set_page_config(
      page_title=APP_NAME,
@@ -10,7 +10,7 @@ st.set_page_config(
 
 st.title(APP_NAME)
 
-text = st.text_input("Enter a query...")
+text = st.text_input("Enter a query...", key='input_query')
 
 site = st.selectbox(
         'Site to search in',
@@ -21,19 +21,18 @@ file_type = st.selectbox(
         ('', 'pdf', 'doc', 'docx', 'ppt', 'pptx'))
 
 num = int(st.selectbox(
-        'limit',
+        'Limit',
         ('10', '15', '20')))
 
-# uploaded_file = st.file_uploader("Or choose a file", type=["txt"])
+uploaded_file = st.file_uploader("Or choose a file", type=["txt"])
 
-if text:
+def find_and_render(text, file_type, site, num):
     query = ''
     if file_type:
         query += f'filetype:{file_type} '
 
     if site:
         query += f'site:{site}'
-
 
     query += f' {text}'
     index = 0
@@ -44,7 +43,18 @@ if text:
     except Exception as e:
         print(e)
 
-# if uploaded_file is not None:
-#     # To convert to a string based IO:
-#     for line in uploaded_file:
-#         st.write(line)
+if text or uploaded_file is not None:
+    st.header('Results:')
+
+if uploaded_file is not None:
+    text = ''
+    
+    for line in uploaded_file:        
+        query = line.decode("utf-8")
+        st.subheader(query)
+        find_and_render(query, file_type, site, num)
+
+if text:
+    find_and_render(text, file_type, site, num)
+    
+
