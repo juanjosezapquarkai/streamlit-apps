@@ -1,7 +1,5 @@
-from re import S
 import streamlit as st
 from googlesearch import search
-import pandas as pd
 
 APP_NAME = "Google Search"
 
