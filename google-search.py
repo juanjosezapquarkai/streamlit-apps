@@ -24,6 +24,12 @@ num = int(st.selectbox(
         'Limit',
         ('10', '15', '20')))
 
+options = st.multiselect(
+     'What are your favorite colors',
+     ['Green', 'Yellow', 'Red', 'Blue'],
+     ['Yellow', 'Red'])
+
+
 uploaded_file = st.file_uploader("Or choose a file", type=["txt"])
 
 def find_and_render(text, file_type, site, num):
